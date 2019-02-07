@@ -28,7 +28,7 @@ git clone https://github.com/zsevic/graphql-starter
 cp .env.sample .env # change values
 npm i
 npm test
-npm start
+npm run dev
 ```
 
 ### :books: Documentation
