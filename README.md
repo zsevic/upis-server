@@ -18,6 +18,7 @@
 - Performance optimizations
   - Batching
 - E2E testing
+- Git hooks for commit
 
 ### :wrench: Setup
 
