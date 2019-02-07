@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src",
-    "test-server": "TEST_DB=testdb npm start",
+    "dev": "nodemon --exec babel-node src",
+    "start": "node -r esm src",
+    "test-server": "TEST_DB=testdb npm run dev",
     "pretest": "eslint --fix --ignore-path .eslintignore .",
     "test": "mocha --require @babel/register 'src/**/*.spec.js'"
   },
@@ -38,6 +39,7 @@
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
     "dotenv": "^6.2.0",
+    "esm": "^3.2.3",
     "express": "^4.16.4",
     "graphql": "^14.1.1",
     "graphql-iso-date": "^3.6.1",
