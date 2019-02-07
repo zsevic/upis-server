@@ -77,14 +77,16 @@ server.installSubscriptionHandlers(httpServer)
 
 // const eraseDatabaseOnSync = true
 const isTest = !!process.env.TEST_DB
+const isProduction = !!process.env.DATABASE_URL
+const port = process.env.PORT || 8080
 
-sequelize.sync({ force: isTest }).then(async () => {
-  if (isTest) {
+sequelize.sync({ force: isTest || isProduction }).then(async () => {
+  if (isTest || isProduction) {
     createUsersWithMessages(new Date())
   }
 
-  httpServer.listen({ port: 8080 }, () => {
-    console.log('Apollo Server on http://localhost:8080/graphql')
+  httpServer.listen({ port }, () => {
+    console.log(`Apollo Server on http://localhost:{port}/graphql`)
   })
 })
 
