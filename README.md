@@ -2,6 +2,8 @@
 
 > modular GraphQL boilerplate powered by Node.js, Express, Apollo Server and PostgreSQL
 
+See demo: [https://graphql-pgsql-starter.herokuapp.com/graphql](https://graphql-pgsql-starter.herokuapp.com/graphql)
+
 ### :sparkles: Features
 
 - GraphQL queries, mutations and subscriptions
