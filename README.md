@@ -18,6 +18,7 @@
 - Performance optimizations
   - Batching
 - E2E testing
+- Eslint setup
 - Git hooks for commit
 
 ### :wrench: Setup
