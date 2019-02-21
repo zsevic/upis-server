@@ -33,7 +33,7 @@ const user = (sequelize, DataTypes) => {
   })
 
   User.associate = models => {
-    User.hasMany(models.Message, { onDelete: 'CASCADE' })
+    User.hasOne(models.Faculty, { onDelete: 'CASCADE' })
   }
 
   User.beforeCreate(async user => {

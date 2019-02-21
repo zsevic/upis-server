@@ -2,7 +2,10 @@ import http from 'http'
 import cors from 'cors'
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import { ApolloServer, AuthenticationError } from 'apollo-server-express'
+import {
+  ApolloServer,
+  AuthenticationError
+} from 'apollo-server-express'
 import DataLoader from 'dataloader'
 import 'dotenv/config'
 
@@ -24,7 +27,9 @@ const getMe = async req => {
     try {
       return await jwt.verify(token, process.env.SECRET)
     } catch (e) {
-      throw new AuthenticationError('Your session expired. Sign in again.')
+      throw new AuthenticationError(
+        'Your session expired. Sign in again.'
+      )
     }
   }
 }
@@ -49,7 +54,9 @@ const server = new ApolloServer({
       return {
         models,
         loaders: {
-          user: new DataLoader(keys => loaders.user.batchUsers(keys, models))
+          user: new DataLoader(keys =>
+            loaders.user.batchUsers(keys, models)
+          )
         }
       }
     }
@@ -62,7 +69,9 @@ const server = new ApolloServer({
         me,
         secret: process.env.SECRET,
         loaders: {
-          user: new DataLoader(keys => loaders.user.batchUsers(keys, models))
+          user: new DataLoader(keys =>
+            loaders.user.batchUsers(keys, models)
+          )
         }
       }
     }
@@ -74,40 +83,58 @@ server.applyMiddleware({
   path: '/graphql'
 })
 
-const httpServer = http.createServer(app)
+export const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
 
-// const eraseDatabaseOnSync = true
+const eraseDatabaseOnSync = process.env.NODE_ENV === 'development'
 const isTest = !!process.env.TEST_DB
 const isProduction = !!process.env.DATABASE_URL
 const port = process.env.PORT || 8080
+const force = isTest || isProduction || eraseDatabaseOnSync
 
-sequelize.sync({ force: isTest || isProduction }).then(async () => {
-  if (isTest || isProduction) {
-    createUsersWithMessages(new Date())
+sequelize.sync({ force }).then(async () => {
+  if (force) {
+    createUsersWithFaculties(new Date())
   }
 
   httpServer.listen({ port }, () => {
-    console.log(`Apollo Server on http://localhost:{port}/graphql`)
+    console.log(`Apollo Server on http://localhost:${port}/graphql`)
   })
 })
 
-const createUsersWithMessages = async date => {
+const createUsersWithFaculties = async date => {
   await models.User.create(
     {
       username: 'user1',
       email: 'user1@users.com',
       password: 'userresu',
       role: 'ADMIN',
-      messages: [
-        {
-          text: 'message1',
-          createdAt: date.setSeconds(date.getSeconds() + 1)
-        }
-      ]
+      faculty: {
+        name: 'faculty1',
+        createdAt: date.setSeconds(date.getSeconds() + 1),
+        departments: [
+          {
+            name: 'department1',
+            total: 50,
+            budget: 23,
+            selfFinancing: 27
+          }
+        ]
+      }
     },
     {
-      include: [models.Message]
+      include: [
+        {
+          model: models.Faculty,
+          as: 'faculty',
+          include: [
+            {
+              model: models.Department,
+              as: 'departments'
+            }
+          ]
+        }
+      ]
     }
   )
 
@@ -116,19 +143,27 @@ const createUsersWithMessages = async date => {
       username: 'user2',
       email: 'user2@users.com',
       password: 'userresu',
-      messages: [
-        {
-          text: 'message2',
-          createdAt: date.setSeconds(date.getSeconds() + 1)
-        },
-        {
-          text: 'message3',
-          createdAt: date.setSeconds(date.getSeconds() + 1)
-        }
-      ]
+      faculty: {
+        name: 'faculty2',
+        createdAt: date.setSeconds(date.getSeconds() + 1),
+        departments: [
+          {
+            name: 'department2',
+            total: 30,
+            budget: 15,
+            selfFinancing: 15
+          }
+        ]
+      }
     },
     {
-      include: [models.Message]
+      include: [
+        {
+          model: models.Faculty,
+          as: 'faculty',
+          include: [{ model: models.Department, as: 'departments' }]
+        }
+      ]
     }
   )
 }

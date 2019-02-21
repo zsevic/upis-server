@@ -41,11 +41,17 @@ export default {
 
       return { token: createToken(user, secret, '30m') }
     },
-    signIn: async (parent, { login, password }, { models, secret }) => {
+    signIn: async (
+      parent,
+      { login, password },
+      { models, secret }
+    ) => {
       const user = await models.User.findByLogin(login)
 
       if (!user) {
-        throw new UserInputError('No user found with this login credentials.')
+        throw new UserInputError(
+          'No user found with this login credentials.'
+        )
       }
 
       const isValid = await user.validatePassword(password)
@@ -68,8 +74,8 @@ export default {
   },
 
   User: {
-    messages: async (user, args, { models }) => {
-      return models.Message.findAll({
+    faculty: async (user, args, { models }) => {
+      return models.Faculty.findOne({
         where: {
           userId: user.id
         }
