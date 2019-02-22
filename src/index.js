@@ -2,10 +2,7 @@ import http from 'http'
 import cors from 'cors'
 import express from 'express'
 import jwt from 'jsonwebtoken'
-import {
-  ApolloServer,
-  AuthenticationError
-} from 'apollo-server-express'
+import { ApolloServer, AuthenticationError } from 'apollo-server-express'
 import DataLoader from 'dataloader'
 import 'dotenv/config'
 
@@ -27,9 +24,7 @@ const getMe = async req => {
     try {
       return await jwt.verify(token, process.env.SECRET)
     } catch (e) {
-      throw new AuthenticationError(
-        'Your session expired. Sign in again.'
-      )
+      throw new AuthenticationError('Your session expired. Sign in again.')
     }
   }
 }
@@ -54,9 +49,7 @@ const server = new ApolloServer({
       return {
         models,
         loaders: {
-          user: new DataLoader(keys =>
-            loaders.user.batchUsers(keys, models)
-          )
+          user: new DataLoader(keys => loaders.user.batchUsers(keys, models))
         }
       }
     }
@@ -69,9 +62,7 @@ const server = new ApolloServer({
         me,
         secret: process.env.SECRET,
         loaders: {
-          user: new DataLoader(keys =>
-            loaders.user.batchUsers(keys, models)
-          )
+          user: new DataLoader(keys => loaders.user.batchUsers(keys, models))
         }
       }
     }
@@ -110,14 +101,26 @@ const createUsersWithFaculties = async date => {
       password: 'userresu',
       role: 'ADMIN',
       faculty: {
-        name: 'faculty1',
+        name: 'Faculty of Mathematics',
         createdAt: date.setSeconds(date.getSeconds() + 1),
         departments: [
           {
-            name: 'department1',
-            total: 50,
-            budget: 23,
-            selfFinancing: 27
+            name: 'Mathematics',
+            total: 250,
+            budget: 205,
+            selfFinancing: 45
+          },
+          {
+            name: 'Computer science',
+            total: 160,
+            budget: 105,
+            selfFinancing: 55
+          },
+          {
+            name: 'Astronomy and astrophysics',
+            total: 25,
+            budget: 20,
+            selfFinancing: 5
           }
         ]
       }
@@ -144,14 +147,20 @@ const createUsersWithFaculties = async date => {
       email: 'user2@users.com',
       password: 'userresu',
       faculty: {
-        name: 'faculty2',
+        name: 'School of Electrical Engineering',
         createdAt: date.setSeconds(date.getSeconds() + 1),
         departments: [
           {
-            name: 'department2',
-            total: 30,
-            budget: 15,
-            selfFinancing: 15
+            name: 'Electrical engineering and computer science',
+            total: 500,
+            budget: 400,
+            selfFinancing: 100
+          },
+          {
+            name: 'Software engineering',
+            total: 175,
+            budget: 30,
+            selfFinancing: 145
           }
         ]
       }
@@ -162,6 +171,53 @@ const createUsersWithFaculties = async date => {
           model: models.Faculty,
           as: 'faculty',
           include: [{ model: models.Department, as: 'departments' }]
+        }
+      ]
+    }
+  )
+
+  await models.User.create(
+    {
+      username: 'user3',
+      email: 'user3@users.com',
+      password: 'userresu',
+      role: 'ADMIN',
+      faculty: {
+        name: 'Faculty of Organizational Sciences',
+        createdAt: date.setSeconds(date.getSeconds() + 1),
+        departments: [
+          {
+            name: 'Information systems and technology',
+            total: 390,
+            budget: 190,
+            selfFinancing: 200
+          },
+          {
+            name: 'Management and organization',
+            total: 330,
+            budget: 190,
+            selfFinancing: 140
+          },
+          {
+            name: 'Information systems and technology - distance studies',
+            total: 100,
+            budget: 5,
+            selfFinancing: 95
+          }
+        ]
+      }
+    },
+    {
+      include: [
+        {
+          model: models.Faculty,
+          as: 'faculty',
+          include: [
+            {
+              model: models.Department,
+              as: 'departments'
+            }
+          ]
         }
       ]
     }
