@@ -5,6 +5,11 @@ export default gql`
     department(id: ID!): Department!
   }
 
+  extend type Mutation {
+    upPlace(id: ID!, attribute: String!): Department!
+    downPlace(id: ID!, attribute: String!): Department!
+  }
+
   type Department {
     id: ID!
     name: String!
