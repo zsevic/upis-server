@@ -10,6 +10,10 @@ export default gql`
     downPlace(id: ID!, attribute: String!): Department!
   }
 
+  extend type Subscription {
+    departmentUpdated: DepartmentUpdated!
+  }
+
   type Department {
     id: ID!
     name: String!
@@ -17,5 +21,9 @@ export default gql`
     budget: Int!
     selfFinancing: Int!
     faculty: Faculty!
+  }
+
+  type DepartmentUpdated {
+    department: Department!
   }
 `
