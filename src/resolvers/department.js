@@ -7,15 +7,21 @@ export default {
 
   Mutation: {
     upPlace: async (parent, { id, attribute }, { models }) => {
-      const updatedDepartment = await models.Department.increment(attribute, {
-        where: { id }
-      })
+      const updatedDepartment = await models.Department.increment(
+        [attribute, 'total'],
+        {
+          where: { id }
+        }
+      )
       return updatedDepartment[0][0][0]
     },
     downPlace: async (parent, { id, attribute }, { models }) => {
-      const updatedDepartment = await models.Department.decrement(attribute, {
-        where: { id }
-      })
+      const updatedDepartment = await models.Department.decrement(
+        [attribute, 'total'],
+        {
+          where: { id }
+        }
+      )
       return updatedDepartment[0][0][0]
     }
   },

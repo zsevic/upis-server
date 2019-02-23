@@ -146,6 +146,7 @@ const createUsersWithFaculties = async date => {
       username: 'user2',
       email: 'user2@users.com',
       password: 'userresu',
+      role: 'user',
       faculty: {
         name: 'School of Electrical Engineering',
         createdAt: date.setSeconds(date.getSeconds() + 1),
