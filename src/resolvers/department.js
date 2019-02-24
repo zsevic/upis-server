@@ -32,6 +32,13 @@ export default {
           where: { id }
         }
       )
+
+      pubsub.publish(EVENTS.DEPARTMENT.UPDATED, {
+        departmentUpdated: {
+          department: updatedDepartment[0][0][0]
+        }
+      })
+
       return updatedDepartment[0][0][0]
     }
   },
