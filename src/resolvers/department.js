@@ -1,4 +1,6 @@
+import { combineResolvers } from 'graphql-resolvers'
 import pubsub, { EVENTS } from '../subscription'
+import { isAuthenticated, isFacultyOwner } from './authorization'
 
 export default {
   Query: {
@@ -8,39 +10,47 @@ export default {
   },
 
   Mutation: {
-    upPlace: async (parent, { id, attribute }, { models }) => {
-      const updatedDepartment = await models.Department.increment(
-        [attribute, 'total'],
-        {
-          where: { id }
-        }
-      )
+    upPlace: combineResolvers(
+      isAuthenticated,
+      isFacultyOwner,
+      async (parent, { id, attribute }, { models }) => {
+        const updatedDepartment = await models.Department.increment(
+          [attribute, 'total'],
+          {
+            where: { id }
+          }
+        )
 
-      pubsub.publish(EVENTS.DEPARTMENT.UPDATED, {
-        departmentUpdated: {
-          department: updatedDepartment[0][0][0]
-        }
-      })
+        pubsub.publish(EVENTS.DEPARTMENT.UPDATED, {
+          departmentUpdated: {
+            department: updatedDepartment[0][0][0]
+          }
+        })
 
-      return updatedDepartment[0][0][0]
-    },
+        return updatedDepartment[0][0][0]
+      }
+    ),
 
-    downPlace: async (parent, { id, attribute }, { models }) => {
-      const updatedDepartment = await models.Department.decrement(
-        [attribute, 'total'],
-        {
-          where: { id }
-        }
-      )
+    downPlace: combineResolvers(
+      isAuthenticated,
+      isFacultyOwner,
+      async (parent, { id, attribute }, { models }) => {
+        const updatedDepartment = await models.Department.decrement(
+          [attribute, 'total'],
+          {
+            where: { id }
+          }
+        )
 
-      pubsub.publish(EVENTS.DEPARTMENT.UPDATED, {
-        departmentUpdated: {
-          department: updatedDepartment[0][0][0]
-        }
-      })
+        pubsub.publish(EVENTS.DEPARTMENT.UPDATED, {
+          departmentUpdated: {
+            department: updatedDepartment[0][0][0]
+          }
+        })
 
-      return updatedDepartment[0][0][0]
-    }
+        return updatedDepartment[0][0][0]
+      }
+    )
   },
 
   Subscription: {

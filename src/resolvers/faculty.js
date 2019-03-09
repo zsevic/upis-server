@@ -1,8 +1,4 @@
 import { Op } from 'sequelize'
-// import { combineResolvers } from 'graphql-resolvers';
-
-// import { isAuthenticated, isFacultyOwner } from './authorization';
-// import pubsub, { EVENTS } from '../subscription';
 
 const toCursorHash = string => Buffer.from(string).toString('base64')
 
@@ -11,11 +7,7 @@ const fromCursorHash = string =>
 
 export default {
   Query: {
-    faculties: async (
-      parent,
-      { cursor, limit = 100 },
-      { models }
-    ) => {
+    faculties: async (parent, { cursor, limit = 100 }, { models }) => {
       const cursorOptions = cursor
         ? {
           where: {
@@ -39,9 +31,7 @@ export default {
         edges,
         pageInfo: {
           hasNextPage,
-          endCursor: toCursorHash(
-            edges[edges.length - 1].createdAt.toString()
-          )
+          endCursor: toCursorHash(edges[edges.length - 1].createdAt.toString())
         }
       }
     },
@@ -50,39 +40,6 @@ export default {
       return models.Faculty.findByPk(id)
     }
   },
-
-  Mutation: {
-    /*    createMessage: combineResolvers(
-      isAuthenticated,
-      async (parent, { text }, { me, models }) => {
-        const message = await models.Message.create({
-          text,
-          userId: me.id,
-        });
-
-        pubsub.publish(EVENTS.MESSAGE.CREATED, {
-          messageCreated: { message },
-        });
-
-        return message;
-      },
-    ),
-*/
-    /*    deleteMessage: combineResolvers(
-      isAuthenticated,
-      isMessageOwner,
-      async (parent, { id }, { models }) => {
-        return models.Message.destroy({ where: { id } });
-      },
-    ),
-    */
-  },
-
-  /* Subscription: {
-    messageCreated: {
-      subscribe: () => pubsub.asyncIterator(EVENTS.MESSAGE.CREATED),
-    },
-  }, */
 
   Faculty: {
     departments: async (faculty, args, { models }) => {

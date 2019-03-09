@@ -74,7 +74,7 @@ server.applyMiddleware({
   path: '/graphql'
 })
 
-export const httpServer = http.createServer(app)
+const httpServer = http.createServer(app)
 server.installSubscriptionHandlers(httpServer)
 
 const eraseDatabaseOnSync = process.env.NODE_ENV === 'development'
@@ -224,3 +224,5 @@ const createUsersWithFaculties = async date => {
     }
   )
 }
+
+export default httpServer
