@@ -6,15 +6,6 @@ export default gql`
     faculty(id: ID!): Faculty!
   }
 
-  #  extend type Mutation {
-  #    createMessage(text: String!): Message!
-  #    deleteMessage(id: ID!): Boolean!
-  #  }
-
-  #  extend type Subscription {
-  #    messageCreated: MessageCreated!
-  #  }
-
   type FacultyConnection {
     edges: [Faculty!]!
     pageInfo: PageInfo!
@@ -31,8 +22,4 @@ export default gql`
     createdAt: Date!
     departments: [Department!]!
   }
-
-  #  type MessageCreated {
-  #    message: Message!
-  #  }
 `

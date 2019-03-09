@@ -6,8 +6,8 @@ export default gql`
   }
 
   extend type Mutation {
-    upPlace(id: ID!, attribute: String!): Department!
-    downPlace(id: ID!, attribute: String!): Department!
+    upPlace(id: ID!, attribute: String!, facultyId: ID!): Department!
+    downPlace(id: ID!, attribute: String!, facultyId: ID!): Department!
   }
 
   extend type Subscription {
