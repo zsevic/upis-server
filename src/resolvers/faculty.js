@@ -1,4 +1,6 @@
 import { Op } from 'sequelize'
+import { combineResolvers } from 'graphql-resolvers'
+import { isAuthenticated, isFacultyOwner } from './authorization'
 
 const toCursorHash = string => Buffer.from(string).toString('base64')
 
@@ -39,6 +41,20 @@ export default {
     faculty: async (parent, { id }, { models }) => {
       return models.Faculty.findByPk(id)
     }
+  },
+
+  Mutation: {
+    incrementCounter: combineResolvers(
+      isAuthenticated,
+      isFacultyOwner,
+      async (parent, { facultyId }, { models, me }) => {
+        const updatedFaculty = await models.Faculty.increment(['counter'], {
+          where: { id: facultyId }
+        })
+
+        return !!updatedFaculty
+      }
+    )
   },
 
   Faculty: {

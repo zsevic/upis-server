@@ -1,4 +1,4 @@
-import { ForbiddenError } from 'apollo-server'
+import { ForbiddenError, UserInputError } from 'apollo-server'
 import { combineResolvers, skip } from 'graphql-resolvers'
 
 export const isAuthenticated = (parent, args, { me }) =>
@@ -11,7 +11,13 @@ export const isAdmin = combineResolvers(
 )
 
 export const isFacultyOwner = async (parent, { facultyId }, { models, me }) => {
-  const faculty = await models.Faculty.findByPk(facultyId, { raw: true })
+  const faculty = await models.Faculty.findByPk(facultyId, {
+    raw: true
+  })
+
+  if (!faculty) {
+    throw new UserInputError('Faculty is not found')
+  }
 
   if (faculty.userId !== me.id) {
     throw new ForbiddenError('Not authenticated as owner.')

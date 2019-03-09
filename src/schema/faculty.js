@@ -6,6 +6,10 @@ export default gql`
     faculty(id: ID!): Faculty!
   }
 
+  extend type Mutation {
+    incrementCounter(facultyId: ID!): Boolean!
+  }
+
   type FacultyConnection {
     edges: [Faculty!]!
     pageInfo: PageInfo!
@@ -19,6 +23,7 @@ export default gql`
   type Faculty {
     id: ID!
     name: String!
+    counter: Int!
     createdAt: Date!
     departments: [Department!]!
   }

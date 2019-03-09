@@ -102,6 +102,7 @@ const createUsersWithFaculties = async date => {
       role: 'ADMIN',
       faculty: {
         name: 'Faculty of Mathematics',
+        counter: 1,
         createdAt: date.setSeconds(date.getSeconds() + 1),
         departments: [
           {
@@ -149,6 +150,7 @@ const createUsersWithFaculties = async date => {
       role: 'user',
       faculty: {
         name: 'School of Electrical Engineering',
+        counter: 1,
         createdAt: date.setSeconds(date.getSeconds() + 1),
         departments: [
           {
@@ -185,6 +187,7 @@ const createUsersWithFaculties = async date => {
       role: 'ADMIN',
       faculty: {
         name: 'Faculty of Organizational Sciences',
+        counter: 1,
         createdAt: date.setSeconds(date.getSeconds() + 1),
         departments: [
           {

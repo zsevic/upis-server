@@ -8,6 +8,15 @@ const faculty = (sequelize, DataTypes) => {
           msg: 'A faculty has to have a name.'
         }
       }
+    },
+    counter: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'A faculty has to have a counter.'
+        }
+      }
     }
   })
 
