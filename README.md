@@ -42,5 +42,9 @@ npm test
 
 ### :books: Documentation
 
-- `npm start`
+- `npm run dev`
 - open [http://localhost:8080/graphql](http://localhost:8080/graphql) and click on `schema`
+
+### :package: Technologies used
+
+- Node.js, Express, Apollo, PostgreSQL
