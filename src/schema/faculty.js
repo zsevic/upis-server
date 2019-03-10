@@ -7,7 +7,11 @@ export default gql`
   }
 
   extend type Mutation {
-    incrementCounter(facultyId: ID!): Boolean!
+    incrementCounter(facultyId: ID!): Faculty!
+  }
+
+  extend type Subscription {
+    facultyUpdated: FacultyUpdated!
   }
 
   type FacultyConnection {
@@ -26,5 +30,9 @@ export default gql`
     counter: Int!
     createdAt: Date!
     departments: [Department!]!
+  }
+
+  type FacultyUpdated {
+    faculty: Faculty!
   }
 `

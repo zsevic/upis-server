@@ -6,12 +6,10 @@ export default gql`
   }
 
   extend type Mutation {
-    upPlace(id: ID!, attribute: String!, facultyId: ID!): Department!
+    """
+         upPlace(id: ID!, attribute: String!, facultyId: ID!): Department!
+    """
     downPlace(id: ID!, attribute: String!, facultyId: ID!): Department!
-  }
-
-  extend type Subscription {
-    departmentUpdated: DepartmentUpdated!
   }
 
   type Department {
@@ -21,9 +19,5 @@ export default gql`
     budget: Int!
     selfFinancing: Int!
     faculty: Faculty!
-  }
-
-  type DepartmentUpdated {
-    department: Department!
   }
 `

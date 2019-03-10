@@ -1,6 +1,7 @@
 import { Op } from 'sequelize'
 import { combineResolvers } from 'graphql-resolvers'
 import { isAuthenticated, isFacultyOwner } from './authorization'
+import pubsub, { EVENTS } from '../subscription'
 
 const toCursorHash = string => Buffer.from(string).toString('base64')
 
@@ -52,9 +53,21 @@ export default {
           where: { id: facultyId }
         })
 
-        return !!updatedFaculty
+        pubsub.publish(EVENTS.FACULTY.UPDATED, {
+          facultyUpdated: {
+            faculty: updatedFaculty[0][0][0]
+          }
+        })
+
+        return updatedFaculty[0][0][0]
       }
     )
+  },
+
+  Subscription: {
+    facultyUpdated: {
+      subscribe: () => pubsub.asyncIterator(EVENTS.FACULTY.UPDATED)
+    }
   },
 
   Faculty: {

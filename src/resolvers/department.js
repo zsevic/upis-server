@@ -10,31 +10,25 @@ export default {
   },
 
   Mutation: {
-    upPlace: combineResolvers(
+    /*     upPlace: combineResolvers(
       isAuthenticated,
       isFacultyOwner,
-      async (parent, { id, attribute }, { models }) => {
+      async (parent, { id, attribute, facultyId }, { models }) => {
         const updatedDepartment = await models.Department.increment(
-          [attribute, 'total'],
+          [attribute, "total"],
           {
             where: { id }
           }
-        )
+        );
 
-        pubsub.publish(EVENTS.DEPARTMENT.UPDATED, {
-          departmentUpdated: {
-            department: updatedDepartment[0][0][0]
-          }
-        })
-
-        return updatedDepartment[0][0][0]
+        return updatedDepartment[0][0][0];
       }
-    ),
+    ), */
 
     downPlace: combineResolvers(
       isAuthenticated,
       isFacultyOwner,
-      async (parent, { id, attribute }, { models }) => {
+      async (parent, { id, attribute, facultyId }, { models }) => {
         const updatedDepartment = await models.Department.decrement(
           [attribute, 'total'],
           {
@@ -42,21 +36,19 @@ export default {
           }
         )
 
-        pubsub.publish(EVENTS.DEPARTMENT.UPDATED, {
-          departmentUpdated: {
-            department: updatedDepartment[0][0][0]
+        const updatedFaculty = await models.Faculty.increment(['counter'], {
+          where: { id: facultyId }
+        })
+
+        pubsub.publish(EVENTS.FACULTY.UPDATED, {
+          facultyUpdated: {
+            faculty: updatedFaculty[0][0][0]
           }
         })
 
         return updatedDepartment[0][0][0]
       }
     )
-  },
-
-  Subscription: {
-    departmentUpdated: {
-      subscribe: () => pubsub.asyncIterator(EVENTS.DEPARTMENT.UPDATED)
-    }
   },
 
   Department: {
