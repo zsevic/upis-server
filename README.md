@@ -1,8 +1,8 @@
-# graphql-pgsql-starter
+# upis-server
 
-> modular GraphQL boilerplate powered by Node.js, Express, Apollo Server and PostgreSQL
+> GraphQL API for Upis
 
-See demo: [https://graphql-pgsql-starter.herokuapp.com/graphql](https://graphql-pgsql-starter.herokuapp.com/graphql)
+See demo: [https://upis.herokuapp.com/graphql](https://upis.herokuapp.com/graphql)
 
 ### :sparkles: Features
 
@@ -10,27 +10,34 @@ See demo: [https://graphql-pgsql-starter.herokuapp.com/graphql](https://graphql-
 - Node.js with Express and Apollo Server
   - cursor-based pagination
 - PostgreSQL database with Sequelize
-  - entities: users, messages
+  - entities: users, faculties, departments
 - Authentication
   - powered by JWT
-  - sign up, sign in
+  - sign in
 - Authorization
   - protected endpoint (verify valid session)
   - protected resolvers (session-based, permission-based, role-based)
 - Performance optimizations
   - Batching
-- E2E testing
+- API testing
 - Eslint setup
 - Git hooks for commit
 
 ### :wrench: Setup
 
 ```bash
-git clone https://github.com/zsevic/graphql-starter
+git clone https://github.com/zsevic/upis-server
+cd upis-server
 cp .env.sample .env # change values
 npm i
-npm test
 npm run dev
+```
+
+### :rotating_light: Testing
+
+```bash
+npm run test-server
+npm test
 ```
 
 ### :books: Documentation
