@@ -1,6 +1,6 @@
 # upis-server
 
-> GraphQL API for Upis
+> GraphQL API for [Upis](https://sevic.me/upis)
 
 See demo: [https://upis.herokuapp.com/graphql](https://upis.herokuapp.com/graphql)
 
