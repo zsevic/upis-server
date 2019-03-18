@@ -1,0 +1,1 @@
+--require @babel/register --require ./test/helpers.js --exit

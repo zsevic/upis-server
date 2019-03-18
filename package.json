@@ -6,9 +6,8 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon --exec babel-node src",
     "start": "node -r esm src",
-    "test-server": "TEST_DB=testdb npm run dev",
     "pretest": "eslint --fix --ignore-path .eslintignore .",
-    "test": "mocha --require @babel/register 'src/**/*.spec.js'"
+    "test": "TEST_DB=testdb mocha"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +19,6 @@
     "@babel/register": "^7.0.0",
     "@commitlint/cli": "^7.5.0",
     "@commitlint/config-conventional": "^7.5.0",
-    "axios": "^0.18.0",
     "chai": "^4.2.0",
     "eslint": "^5.13.0",
     "eslint-config-standard": "^12.0.0",
@@ -31,7 +29,7 @@
     "husky": "^1.3.1",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
-    "supertest": "^3.4.2"
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "apollo-server": "^2.3.2",

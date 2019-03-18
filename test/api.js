@@ -1,9 +1,5 @@
-import axios from 'axios'
-
-const API_URL = 'http://localhost:8080/graphql'
-
 export const user = async variables =>
-  axios.post(API_URL, {
+  api.post('/graphql').send({
     query: `
             query ($id: ID!) {
                 user(id:$id) {
@@ -18,7 +14,7 @@ export const user = async variables =>
   })
 
 export const signIn = async variables =>
-  axios.post(API_URL, {
+  api.post('/graphql').send({
     query: `
         mutation ($login: String!, $password: String!) {
             signIn(login:$login, password:$password) {
@@ -30,8 +26,7 @@ export const signIn = async variables =>
   })
 
 export const deleteUser = async (variables, token) =>
-  axios.post(
-    API_URL,
+  api.post('/graphql').send(
     {
       query: `
         mutation($id:ID!) {

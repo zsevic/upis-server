@@ -1,8 +1,13 @@
 import { expect } from 'chai'
 
 import * as userApi from './api'
+import { createUsersWithFaculties } from '../src/helpers/seed'
 
 describe('users', () => {
+  before(async () => {
+    await createUsersWithFaculties(new Date())
+  })
+
   describe('user(id: String!): User', () => {
     it('should return a user if user is found', async () => {
       const expectedResult = {
@@ -18,7 +23,7 @@ describe('users', () => {
 
       const result = await userApi.user({ id: '1' })
 
-      expect(result.data).to.eql(expectedResult)
+      expect(result.body).to.eql(expectedResult)
     })
 
     it('should return null if user is not found', async () => {
@@ -30,14 +35,14 @@ describe('users', () => {
 
       const result = await userApi.user({ id: '42' })
 
-      expect(result.data).to.eql(expectedResult)
+      expect(result.body).to.eql(expectedResult)
     })
   })
 
   describe('deleteUser(id: String!): Boolean!', () => {
     it('should return an error because only admins can delete a user', async () => {
       const {
-        data: {
+        body: {
           data: {
             signIn: { token }
           }
@@ -48,10 +53,11 @@ describe('users', () => {
       })
 
       const {
-        data: { errors }
+        body: { errors }
       } = await userApi.deleteUser({ id: '1' }, token)
 
-      expect(errors[0].message).to.eql('Not authorized as admin.')
+      // FIX
+      expect(errors[0].message).to.eql('Not authenticated as user.')
     })
   })
 })

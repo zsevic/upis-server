@@ -40,6 +40,8 @@ export default {
           where: { id: facultyId }
         })
 
+        console.log(updatedFaculty)
+
         pubsub.publish(EVENTS.FACULTY.UPDATED, {
           facultyUpdated: {
             faculty: updatedFaculty[0][0][0]
