@@ -10,7 +10,7 @@ import schema from './schema'
 import resolvers from './resolvers'
 import models, { sequelize } from './models'
 import loaders from './loaders'
-import { createUsersWithFaculties } from '../src/helpers/seed'
+import { createUsersWithFaculties } from './helpers/seed'
 
 const app = express()
 

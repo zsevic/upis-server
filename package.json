@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon --exec babel-node src",
-    "start": "node -r esm src",
+    "build": "babel src --out-dir dist",
+    "start": "node dist",
     "pretest": "eslint --fix --ignore-path .eslintignore .",
-    "test": "TEST_DB=testdb mocha"
+    "test": "TEST_DB=upisdb mocha"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
@@ -38,7 +40,6 @@
     "cors": "^2.8.5",
     "dataloader": "^1.4.0",
     "dotenv": "^6.2.0",
-    "esm": "^3.2.3",
     "express": "^4.16.4",
     "graphql": "^14.1.1",
     "graphql-iso-date": "^3.6.1",

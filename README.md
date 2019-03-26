@@ -12,10 +12,8 @@ See demo: [https://upis.herokuapp.com/graphql](https://upis.herokuapp.com/graphq
 - PostgreSQL database with Sequelize
   - entities: users, faculties, departments
 - Authentication
-
   - powered by JWT
   - sign in
-
 - Authorization
   - protected endpoint (verify valid session)
   - protected resolvers (session-based, permission-based, role-based)
@@ -33,6 +31,13 @@ cd upis-server
 cp .env.sample .env # change values
 yarn
 yarn dev
+```
+
+### :construction_worker: Build
+
+```bash
+yarn build
+yarn start
 ```
 
 ### :rotating_light: Testing
