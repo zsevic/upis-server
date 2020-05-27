@@ -41,12 +41,12 @@ const user = (sequelize, DataTypes) => {
     newUser.password = await newUser.generatePasswordHash();
   });
 
-  User.prototype.generatePasswordHash = async function () {
+  User.prototype.generatePasswordHash = async function generatePasswordHash() {
     const saltRounds = 10;
     return bcrypt.hash(this.password, saltRounds);
   };
 
-  User.prototype.validatePassword = async function (password) {
+  User.prototype.validatePassword = async function validatePassword(password) {
     return bcrypt.compare(password, this.password);
   };
 
