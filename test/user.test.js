@@ -56,7 +56,7 @@ describe('users', () => {
         body: { errors },
       } = await userApi.deleteUser({ id: '1' }, token);
 
-      // FIX
+      // TODO fix
       expect(errors[0].message).to.eql('Not authenticated as user.');
     });
   });
