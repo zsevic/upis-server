@@ -5,29 +5,29 @@ const faculty = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'A faculty has to have a name.'
-        }
-      }
+          msg: 'A faculty has to have a name.',
+        },
+      },
     },
     counter: {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
           args: true,
-          msg: 'A faculty has to have a counter.'
-        }
-      }
-    }
-  })
+          msg: 'A faculty has to have a counter.',
+        },
+      },
+    },
+  });
 
-  Faculty.associate = models => {
-    Faculty.belongsTo(models.User)
+  Faculty.associate = (models) => {
+    Faculty.belongsTo(models.User);
     Faculty.hasMany(models.Department, {
-      as: 'departments'
-    })
-  }
+      as: 'departments',
+    });
+  };
 
-  return Faculty
-}
+  return Faculty;
+};
 
-export default faculty
+export default faculty;

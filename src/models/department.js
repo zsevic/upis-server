@@ -5,9 +5,9 @@ const department = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'A department has to have a name.'
-        }
-      }
+          msg: 'A department has to have a name.',
+        },
+      },
     },
 
     total: {
@@ -15,9 +15,9 @@ const department = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'A total has to be a valid integer.'
-        }
-      }
+          msg: 'A total has to be a valid integer.',
+        },
+      },
     },
 
     budget: {
@@ -25,9 +25,9 @@ const department = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'A budget has to be a valid integer.'
-        }
-      }
+          msg: 'A budget has to be a valid integer.',
+        },
+      },
     },
 
     selfFinancing: {
@@ -35,17 +35,17 @@ const department = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: 'A selfFinancing has to be a valid integer.'
-        }
-      }
-    }
-  })
+          msg: 'A selfFinancing has to be a valid integer.',
+        },
+      },
+    },
+  });
 
-  Department.associate = models => {
-    Department.belongsTo(models.Faculty)
-  }
+  Department.associate = (models) => {
+    Department.belongsTo(models.Faculty);
+  };
 
-  return Department
-}
+  return Department;
+};
 
-export default department
+export default department;

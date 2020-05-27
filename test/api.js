@@ -1,6 +1,5 @@
-export const user = async variables =>
-  api.post('/graphql').send({
-    query: `
+export const user = async (variables) => api.post('/graphql').send({
+  query: `
             query ($id: ID!) {
                 user(id:$id) {
                     id
@@ -10,32 +9,30 @@ export const user = async variables =>
                 }
             }
         `,
-    variables
-  })
+  variables,
+});
 
-export const signIn = async variables =>
-  api.post('/graphql').send({
-    query: `
+export const signIn = async (variables) => api.post('/graphql').send({
+  query: `
         mutation ($login: String!, $password: String!) {
             signIn(login:$login, password:$password) {
                 token
             }
         }
       `,
-    variables
-  })
+  variables,
+});
 
-export const deleteUser = async (variables, token) =>
-  api.post('/graphql').send(
-    {
-      query: `
+export const deleteUser = async (variables, token) => api.post('/graphql').send(
+  {
+    query: `
         mutation($id:ID!) {
             deleteUser(id:$id)
         }
       `,
-      variables
-    },
-    {
-      headers: { 'x-token': token }
-    }
-  )
+    variables,
+  },
+  {
+    headers: { 'x-token': token },
+  },
+);

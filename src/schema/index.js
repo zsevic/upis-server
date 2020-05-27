@@ -1,8 +1,8 @@
-import { gql } from 'apollo-server-express'
+import { gql } from 'apollo-server-express';
 
-import userSchema from './user'
-import facultySchema from './faculty'
-import departmentSchema from './department'
+import userSchema from './user';
+import facultySchema from './faculty';
+import departmentSchema from './department';
 
 const linkSchema = gql`
   scalar Date
@@ -18,11 +18,11 @@ const linkSchema = gql`
   type Subscription {
     _: Boolean
   }
-`
+`;
 
 export default [
   linkSchema,
   userSchema,
   facultySchema,
-  departmentSchema
-]
+  departmentSchema,
+];

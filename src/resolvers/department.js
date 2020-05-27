@@ -1,12 +1,10 @@
-import { combineResolvers } from 'graphql-resolvers'
-import pubsub, { EVENTS } from '../subscription'
-import { isAuthenticated, isFacultyOwner } from './authorization'
+import { combineResolvers } from 'graphql-resolvers';
+import pubsub, { EVENTS } from '../subscription';
+import { isAuthenticated, isFacultyOwner } from './authorization';
 
 export default {
   Query: {
-    department: async (parent, { id }, { models }) => {
-      return models.Department.findByPk(id)
-    }
+    department: async (parent, { id }, { models }) => models.Department.findByPk(id),
   },
 
   Mutation: {
@@ -32,32 +30,30 @@ export default {
         const updatedDepartment = await models.Department.decrement(
           [attribute, 'total'],
           {
-            where: { id }
-          }
-        )
+            where: { id },
+          },
+        );
 
         const updatedFaculty = await models.Faculty.increment(['counter'], {
-          where: { id: facultyId }
-        })
+          where: { id: facultyId },
+        });
 
-        console.log(updatedFaculty)
+        console.log(updatedFaculty);
 
         pubsub.publish(EVENTS.FACULTY.UPDATED, {
           facultyUpdated: {
-            faculty: updatedFaculty[0][0][0]
-          }
-        })
+            faculty: updatedFaculty[0][0][0],
+          },
+        });
 
-        return updatedDepartment[0][0][0]
-      }
-    )
+        return updatedDepartment[0][0][0];
+      },
+    ),
   },
 
   Department: {
-    faculty: async (department, { id }, { models }) => {
-      return models.Faculty.findOne({
-        where: { id: department.facultyId }
-      })
-    }
-  }
-}
+    faculty: async (department, _, { models }) => models.Faculty.findOne({
+      where: { id: department.facultyId },
+    }),
+  },
+};

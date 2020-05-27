@@ -1,6 +1,6 @@
-import models from '../models'
+import models from '../models';
 
-export const createUsersWithFaculties = async date => {
+export const createUsersWithFaculties = async (date) => {
   await models.User.create(
     {
       username: 'user1',
@@ -16,22 +16,22 @@ export const createUsersWithFaculties = async date => {
             name: 'Mathematics',
             total: 250,
             budget: 205,
-            selfFinancing: 45
+            selfFinancing: 45,
           },
           {
             name: 'Computer science',
             total: 160,
             budget: 105,
-            selfFinancing: 55
+            selfFinancing: 55,
           },
           {
             name: 'Astronomy and astrophysics',
             total: 25,
             budget: 20,
-            selfFinancing: 5
-          }
-        ]
-      }
+            selfFinancing: 5,
+          },
+        ],
+      },
     },
     {
       include: [
@@ -41,13 +41,13 @@ export const createUsersWithFaculties = async date => {
           include: [
             {
               model: models.Department,
-              as: 'departments'
-            }
-          ]
-        }
-      ]
-    }
-  )
+              as: 'departments',
+            },
+          ],
+        },
+      ],
+    },
+  );
 
   await models.User.create(
     {
@@ -64,27 +64,27 @@ export const createUsersWithFaculties = async date => {
             name: 'Electrical engineering and computer science',
             total: 500,
             budget: 400,
-            selfFinancing: 100
+            selfFinancing: 100,
           },
           {
             name: 'Software engineering',
             total: 175,
             budget: 30,
-            selfFinancing: 145
-          }
-        ]
-      }
+            selfFinancing: 145,
+          },
+        ],
+      },
     },
     {
       include: [
         {
           model: models.Faculty,
           as: 'faculty',
-          include: [{ model: models.Department, as: 'departments' }]
-        }
-      ]
-    }
-  )
+          include: [{ model: models.Department, as: 'departments' }],
+        },
+      ],
+    },
+  );
 
   await models.User.create(
     {
@@ -101,22 +101,22 @@ export const createUsersWithFaculties = async date => {
             name: 'Information systems and technology',
             total: 390,
             budget: 190,
-            selfFinancing: 200
+            selfFinancing: 200,
           },
           {
             name: 'Management and organization',
             total: 330,
             budget: 190,
-            selfFinancing: 140
+            selfFinancing: 140,
           },
           {
             name: 'Information systems and technology - distance studies',
             total: 100,
             budget: 5,
-            selfFinancing: 95
-          }
-        ]
-      }
+            selfFinancing: 95,
+          },
+        ],
+      },
     },
     {
       include: [
@@ -126,11 +126,11 @@ export const createUsersWithFaculties = async date => {
           include: [
             {
               model: models.Department,
-              as: 'departments'
-            }
-          ]
-        }
-      ]
-    }
-  )
-}
+              as: 'departments',
+            },
+          ],
+        },
+      ],
+    },
+  );
+};

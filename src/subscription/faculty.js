@@ -1,1 +1,1 @@
-export const UPDATED = 'UPDATED'
+export const UPDATED = 'UPDATED';

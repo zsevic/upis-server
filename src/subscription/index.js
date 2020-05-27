@@ -1,9 +1,9 @@
-import { PubSub } from 'apollo-server'
+import { PubSub } from 'apollo-server';
 
-import * as FACULTY_EVENTS from './faculty'
+import * as FACULTY_EVENTS from './faculty';
 
 export const EVENTS = {
-  FACULTY: FACULTY_EVENTS
-}
+  FACULTY: FACULTY_EVENTS,
+};
 
-export default new PubSub()
+export default new PubSub();

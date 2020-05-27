@@ -1,12 +1,11 @@
-import { Op } from 'sequelize'
-import { combineResolvers } from 'graphql-resolvers'
-import { isAuthenticated, isFacultyOwner } from './authorization'
-import pubsub, { EVENTS } from '../subscription'
+import { Op } from 'sequelize';
+import { combineResolvers } from 'graphql-resolvers';
+import { isAuthenticated, isFacultyOwner } from './authorization';
+import pubsub, { EVENTS } from '../subscription';
 
-const toCursorHash = string => Buffer.from(string).toString('base64')
+const toCursorHash = (string) => Buffer.from(string).toString('base64');
 
-const fromCursorHash = string =>
-  Buffer.from(string, 'base64').toString('ascii')
+const fromCursorHash = (string) => Buffer.from(string, 'base64').toString('ascii');
 
 export default {
   Query: {
@@ -15,68 +14,64 @@ export default {
         ? {
           where: {
             createdAt: {
-              [Op.lt]: fromCursorHash(cursor)
-            }
-          }
+              [Op.lt]: fromCursorHash(cursor),
+            },
+          },
         }
-        : {}
+        : {};
 
       const faculties = await models.Faculty.findAll({
         order: [['createdAt', 'DESC']],
         limit: limit + 1,
-        ...cursorOptions
-      })
+        ...cursorOptions,
+      });
 
-      const hasNextPage = faculties.length > limit
-      const edges = hasNextPage ? faculties.slice(0, -1) : faculties
+      const hasNextPage = faculties.length > limit;
+      const edges = hasNextPage ? faculties.slice(0, -1) : faculties;
 
       return {
         edges,
         pageInfo: {
           hasNextPage,
-          endCursor: toCursorHash(edges[edges.length - 1].createdAt.toString())
-        }
-      }
+          endCursor: toCursorHash(edges[edges.length - 1].createdAt.toString()),
+        },
+      };
     },
 
-    faculty: async (parent, { id }, { models }) => {
-      return models.Faculty.findByPk(id)
-    }
+    faculty: async (parent, { id }, { models }) => models.Faculty.findByPk(id),
   },
 
   Mutation: {
     incrementCounter: combineResolvers(
       isAuthenticated,
       isFacultyOwner,
-      async (parent, { facultyId }, { models, me }) => {
+      async (parent, { facultyId }, { models }) => {
         const updatedFaculty = await models.Faculty.increment(['counter'], {
-          where: { id: facultyId }
-        })
+          where: { id: facultyId },
+        });
 
         pubsub.publish(EVENTS.FACULTY.UPDATED, {
           facultyUpdated: {
-            faculty: updatedFaculty[0][0][0]
-          }
-        })
+            faculty: updatedFaculty[0][0][0],
+          },
+        });
 
-        return updatedFaculty[0][0][0]
-      }
-    )
+        return updatedFaculty[0][0][0];
+      },
+    ),
   },
 
   Subscription: {
     facultyUpdated: {
-      subscribe: () => pubsub.asyncIterator(EVENTS.FACULTY.UPDATED)
-    }
+      subscribe: () => pubsub.asyncIterator(EVENTS.FACULTY.UPDATED),
+    },
   },
 
   Faculty: {
-    departments: async (faculty, args, { models }) => {
-      return models.Department.findAll({
-        where: {
-          facultyId: faculty.id
-        }
-      })
-    }
-  }
-}
+    departments: async (faculty, args, { models }) => models.Department.findAll({
+      where: {
+        facultyId: faculty.id,
+      },
+    }),
+  },
+};
