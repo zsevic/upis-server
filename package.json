@@ -8,8 +8,9 @@
     "dev": "NODE_ENV=development nodemon --exec babel-node src",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prestart": "npm run build",
     "start": "node dist",
+    "prestart:dev": "npm run build",
+    "start:dev": "node dist",
     "test": "TEST_DB=upisdb mocha",
     "test-ci": "mocha --grep @ci"
   },
