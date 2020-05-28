@@ -4,7 +4,7 @@
 
 See demo: [https://upis.herokuapp.com/graphql](https://upis.herokuapp.com/graphql)
 
-### :sparkles: Features
+## Features
 
 - GraphQL queries, mutations and subscriptions
 - Node.js with Express and Apollo Server
@@ -23,34 +23,34 @@ See demo: [https://upis.herokuapp.com/graphql](https://upis.herokuapp.com/graphq
 - Eslint setup
 - Git hooks for commit
 
-### :wrench: Setup
+### Setup
 
 ```bash
 git clone https://github.com/zsevic/upis-server
 cd upis-server
 cp .env.sample .env # change values
-yarn
-yarn dev
+npm i
+npm run dev
 ```
 
-### :construction_worker: Build
+### Build
 
 ```bash
-yarn build
-yarn start
+npm run build
+npm start
 ```
 
-### :rotating_light: Testing
+### Testing
 
 ```bash
-yarn test
+npm test
 ```
 
-### :books: Documentation
+### Documentation
 
-- `yarn dev`
+- `npm run dev`
 - open [http://localhost:8080/graphql](http://localhost:8080/graphql) and click on `schema`
 
-### :package: Technologies used
+### Technologies used
 
 - Node.js, Express, Apollo, PostgreSQL
