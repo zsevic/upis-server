@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "start": "node dist",
-    "prestart:dev": "npm run build",
-    "start:dev": "node dist",
+    "start:dev": "npm run build && node dist",
     "test": "TEST_DB=upisdb mocha",
     "test-ci": "mocha --grep @ci"
   },
